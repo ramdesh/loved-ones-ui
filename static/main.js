@@ -1,3 +1,6 @@
+MESSAGE_URL = "http://localhost:5000/v1/message"
+INFO_URL = "http://localhost:5000/v1/info"
+
 /**
  * Returns the current datetime for the message creation.
  */
@@ -84,10 +87,14 @@ $('#send_button').on('click', function (e) {
 	showUserMessage($('#msg_input').val());
 	$('#msg_input').val('');
 
+	$.post( MESSAGE_URL, function( data ) {
+		showBotMessage(data.response);
+	});
+
 	// show bot message
-	setTimeout(function () {
-		showBotMessage(randomstring());
-	}, 300);
+	// setTimeout(function () {
+	// 	showBotMessage(randomstring());
+	// }, 300);
 });
 
 /**
@@ -112,5 +119,8 @@ function randomstring(length = 20) {
  * Set initial bot message to the screen for the user.
  */
 $(window).on('load', function () {
-	showBotMessage('Hello there! Type in a message.');
+	$.get(INFO_URL, function(data) {
+		showBotMessage("You're chatting with model " + data.modelName);
+	});
+	//showBotMessage('Hello there! Type in a message.');
 });
