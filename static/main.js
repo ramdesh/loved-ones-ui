@@ -1,5 +1,6 @@
-MESSAGE_URL = "http://localhost:5000/v1/message"
+MESSAGE_URL = "http://localhost:5000/v1/messages"
 INFO_URL = "http://localhost:5000/v1/info"
+
 
 /**
  * Returns the current datetime for the message creation.
@@ -84,17 +85,29 @@ function showBotMessage(message, datetime) {
  */
 $('#send_button').on('click', function (e) {
 	// get and show message and reset input
-	showUserMessage($('#msg_input').val());
+	var message = $('#msg_input').val();
+	showUserMessage(message);
 	$('#msg_input').val('');
-
-	$.post( MESSAGE_URL, function( data ) {
-		showBotMessage(data.response);
+	$.ajaxSetup({
+		contentType: "application/json; charset=utf-8"
 	});
+	$.post(
+		MESSAGE_URL,
+		JSON.stringify({ message: message }),
+		function (response) {
+			showBotMessage(response.response);
+		},
+		"json"
+	);
 
-	// show bot message
-	// setTimeout(function () {
-	// 	showBotMessage(randomstring());
-	// }, 300);
+	// $.post({
+	// 	url: MESSAGE_URL,
+	// 	data: { message: message },
+	// 	contentType: 'application/json; charset=utf-8'
+	// })
+	// 	.done(function (response) {
+	// 		showBotMessage(response.response);
+	// 	});
 });
 
 /**
@@ -121,6 +134,7 @@ function randomstring(length = 20) {
 $(window).on('load', function () {
 	$.get(INFO_URL, function(data) {
 		showBotMessage("You're chatting with model " + data.modelName);
+		showBotMessage("The personality that is loaded currently is \"" + data.personality + "\"");
 	});
 	//showBotMessage('Hello there! Type in a message.');
 });
