@@ -1,5 +1,5 @@
-MESSAGE_URL = "http://localhost:5000/v1/messages"
-INFO_URL = "http://localhost:5000/v1/info"
+MESSAGE_URL = "http://localhost:5001/v1/messages"
+INFO_URL = "http://localhost:5001/v1/info"
 
 
 /**
