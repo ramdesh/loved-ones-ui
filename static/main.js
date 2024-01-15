@@ -1,5 +1,7 @@
-MESSAGE_URL = "http://localhost:5001/v1/messages"
-INFO_URL = "http://localhost:5001/v1/info"
+API_DOMAIN = "http://159.89.181.212"
+
+MESSAGE_URL = API_DOMAIN + ":5001/v1/messages"
+INFO_URL = API_DOMAIN + ":5001/v1/info"
 
 
 /**
